@@ -102,9 +102,22 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 GetDir()
     {
         // TODO: Normalisera x och y istället för xyz
+        Vector3 nextVertex;
+        Vector3 currentVertex;
         if (movingForwards)
-            return (GetVertex(index + 1) - GetVertex(index)).normalized;
-        return (GetVertex(index - 1) - GetVertex(index)).normalized;
+        {
+            nextVertex = GetVertex(index + 1);
+            currentVertex = GetVertex(index);
+            nextVertex.z = 0;
+            currentVertex.z = 0;
+            return (nextVertex - currentVertex).normalized;
+        }
+
+        nextVertex = GetVertex(index - 1);
+        currentVertex = GetVertex(index);
+        nextVertex.z = 0;
+        currentVertex.z = 0;
+        return (nextVertex - currentVertex).normalized;
     }
 
     public void PauseMovement()
