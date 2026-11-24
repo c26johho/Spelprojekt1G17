@@ -474,7 +474,7 @@ namespace Pathfinding {
 
 			Vector3 start, end;
 			CalculatePathRequestEndpoints(out start, out end);
-
+			
 			// Request a path to be calculated from our current position to the destination
 			ABPath p = ABPath.Construct(start, end, null);
 			SetPath(p);
