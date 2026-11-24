@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 
 public class FourDirTopDown : MonoBehaviour
@@ -35,13 +36,13 @@ public class FourDirTopDown : MonoBehaviour
     {
         if (controlEnabled)
         {
-            rb.linearVelocity = moveInput * speed;
+            rb.linearVelocity = inputDirection * speed;
         }
     }
 
-    public void OnMove(InputAction.CallbackContext input)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = input.ReadValue<Vector2>().normalized;
+        moveInput = context.ReadValue<Vector2>().normalized;
         inputDirection = GetDirection(moveInput);
     }
 
