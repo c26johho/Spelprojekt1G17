@@ -18,8 +18,6 @@ public class FourDirTopDown : MonoBehaviour
     private string animationDirection;
     
     private Rigidbody2D rb;
-
-
     
     private void Awake()
     {
