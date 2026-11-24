@@ -1749,8 +1749,8 @@ GameObject:
   - component: {fileID: 1041497535}
   - component: {fileID: 1041497534}
   - component: {fileID: 1041497533}
-  - component: {fileID: 1041497532}
   - component: {fileID: 1041497536}
+  - component: {fileID: 1041497537}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: Untagged
@@ -1773,19 +1773,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 756945921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1041497532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041497530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa901b50c6198ad4ab86c97e92e6b61b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TopDownMovement
-  maxSpeed: 7
 --- !u!60 &1041497533
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1952,8 +1939,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1041497532}
-        m_TargetAssemblyTypeName: TopDownMovement, Assembly-CSharp
+      - m_Target: {fileID: 1041497537}
+        m_TargetAssemblyTypeName: FourDirTopDown, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -2043,6 +2030,19 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1041497537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041497530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e56e5eb6d1d8e6478b12d501eb00360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FourDirTopDown
+  speed: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class TopDownMovement : MonoBehaviour
     
     private Vector2 moveInput;
     private Rigidbody2D rb;
+    private Transform tf;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
