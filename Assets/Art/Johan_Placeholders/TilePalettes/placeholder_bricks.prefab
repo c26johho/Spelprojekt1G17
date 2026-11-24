@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 2755490844881137399}
   - component: {fileID: 1018684644601678547}
   m_Layer: 0
-  m_Name: New Tile Palette
+  m_Name: placeholder_bricks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
