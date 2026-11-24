@@ -14,10 +14,20 @@ public class FourDirTopDown : MonoBehaviour
     public bool controlEnabled { get; set; } = true;
 
     private Vector2 moveInput;
+    private PreviousInputDirection lastInput;
     private Vector2 inputDirection;
     private string animationDirection;
+    
     private Rigidbody2D rb;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private enum PreviousInputDirection
+    {
+        Up,
+        Down,
+        Right,
+        Left
+    }
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,6 +52,8 @@ public class FourDirTopDown : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        Debug.Log(context);
+        Vector2 previousInput = moveInput;
         moveInput = context.ReadValue<Vector2>().normalized;
         inputDirection = GetDirection(moveInput);
     }
@@ -53,23 +65,28 @@ public class FourDirTopDown : MonoBehaviour
         if (moveInput.y > 0)
         {
             animationDirection = "Up";
+            lastInput = PreviousInputDirection.Up;
             moveDirection = new Vector2(0, 1);
         }
         //Down
         else if (moveInput.y < 0)
         {
             animationDirection = "Down";
+            lastInput = PreviousInputDirection.Down;
             moveDirection = new Vector2(0, -1);
         }
         //Right
         else if (moveInput.x > 0)
         {
             animationDirection = "Right";
+            lastInput = PreviousInputDirection.Right;
             moveDirection = new Vector2(1, 0);
         }
+        //Left
         else if (moveInput.x < 0)
         {
             animationDirection = "Left";
+            lastInput = PreviousInputDirection.Left;
             moveDirection = new Vector2(-1, 0);
         }
 
