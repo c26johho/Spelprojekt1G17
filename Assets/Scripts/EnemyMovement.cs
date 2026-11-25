@@ -15,8 +15,7 @@ public class EnemyMovement : MonoBehaviour
     private float timer;
     private bool waiting;
     private float distanceTraveled;
-    private bool movingForwards;
-    private bool moving;
+    private bool moving, active, movingForwards;
     private Vector3 velocity;
     private bool right, left, up, down;
     private Animator animator;
@@ -27,29 +26,33 @@ public class EnemyMovement : MonoBehaviour
         tf.position = GetVertex(index);
         movingForwards = true;
         moving = true;
+        active = true;
     }
     
     void Update()
     {
-        if (moving)
+        if (active)
         {
-            Vector3 velocity = GetDir() * speed;
-            transform.position += velocity * Time.deltaTime;
-            distanceTraveled += (velocity * Time.deltaTime).magnitude;
-            if (movingForwards)
+            if (moving)
             {
-                UpdateForwardsPatrol();
+                Vector3 velocity = GetDir() * speed;
+                transform.position += velocity * Time.deltaTime;
+                distanceTraveled += (velocity * Time.deltaTime).magnitude;
+                if (movingForwards)
+                {
+                    UpdateForwardsPatrol();
+                }
+                else
+                {
+                    UpdateBackwardsPatrol();
+                }
             }
             else
             {
-                UpdateBackwardsPatrol();
+                timer -= Time.deltaTime;
+                if (timer <= 0)
+                    moving = true;
             }
-        }
-        else
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-                moving = true;
         }
         /*animator.SetFloat("velocityX", velocity.x);
         animator.SetFloat("velocityY", velocity.y);*/
@@ -122,12 +125,12 @@ public class EnemyMovement : MonoBehaviour
 
     public void PauseMovement()
     {
-        moving = false;
+        active = false;
     }
 
     public void ResumeMovement()
     {
-        moving = true;
+        active = true;
     }
     
 } 
