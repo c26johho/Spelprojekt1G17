@@ -1132,6 +1132,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1802424469}
+        m_TargetAssemblyTypeName: Pathfinding.AILerp, AstarPathfindingProject
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1802424463}
         m_TargetAssemblyTypeName: Pathfinding.AIDestinationSetter, AstarPathfindingProject
         m_MethodName: SetTarget
@@ -3200,9 +3212,9 @@ MonoBehaviour:
   OnReturn:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1802424469}
-        m_TargetAssemblyTypeName: Pathfinding.AILerp, AstarPathfindingProject
-        m_MethodName: OnDisable
+      - m_Target: {fileID: 1802424470}
+        m_TargetAssemblyTypeName: EnemyMovement, Assembly-CSharp
+        m_MethodName: ResumeMovement
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3212,10 +3224,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1802424470}
-        m_TargetAssemblyTypeName: EnemyMovement, Assembly-CSharp
-        m_MethodName: ResumeMovement
+      - m_Target: {fileID: 1802424469}
+        m_TargetAssemblyTypeName: Pathfinding.AILerp, AstarPathfindingProject
+        m_MethodName: OnTargetReached
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1802424469}
+        m_TargetAssemblyTypeName: Pathfinding.AILerp, AstarPathfindingProject
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
