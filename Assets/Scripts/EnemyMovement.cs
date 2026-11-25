@@ -16,6 +16,14 @@ public class EnemyMovement : MonoBehaviour
     private bool waiting, moving, active, movingForwards;
     private bool right, left, up, down;
     private Animator animator;
+    public FacingDirection faceDir;
+    public enum FacingDirection
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
     private void Awake()
     {
         tf = GetComponent<Transform>();
@@ -33,6 +41,7 @@ public class EnemyMovement : MonoBehaviour
             if (moving)
             {
                 Vector3 velocity = GetDir() * speed;
+                GetFacingDirection(velocity);
                 transform.position += velocity * Time.deltaTime;
                 if (movingForwards)
                 {
@@ -99,7 +108,6 @@ public class EnemyMovement : MonoBehaviour
     }
     private Vector3 GetDir()
     {
-        // TODO: Normalisera x och y istället för xyz
         Vector3 nextVertex;
         Vector3 currentVertex;
         if (movingForwards)
@@ -127,5 +135,24 @@ public class EnemyMovement : MonoBehaviour
     {
         active = true;
     }
-    
+
+    private void GetFacingDirection(Vector3 dir)
+    {
+        if (dir.x > 0)
+        {
+            faceDir = FacingDirection.Right;
+        }
+        else if (dir.x < 0)
+        {
+            faceDir = FacingDirection.Left;
+        }
+        else if (dir.y > 0)
+        {
+            faceDir = FacingDirection.Up;
+        }
+        else
+        {
+            faceDir = FacingDirection.Down;
+        }
+    }
 } 
