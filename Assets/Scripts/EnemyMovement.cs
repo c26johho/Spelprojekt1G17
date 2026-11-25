@@ -13,10 +13,7 @@ public class EnemyMovement : MonoBehaviour
     private int index;
     private Transform tf;
     private float timer;
-    private bool waiting;
-    private float distanceTraveled;
-    private bool moving, active, movingForwards;
-    private Vector3 velocity;
+    private bool waiting, moving, active, movingForwards;
     private bool right, left, up, down;
     private Animator animator;
     private void Awake()
@@ -37,7 +34,6 @@ public class EnemyMovement : MonoBehaviour
             {
                 Vector3 velocity = GetDir() * speed;
                 transform.position += velocity * Time.deltaTime;
-                distanceTraveled += (velocity * Time.deltaTime).magnitude;
                 if (movingForwards)
                 {
                     float distanceRemaining = (GetVertex(index + 1) - transform.position).magnitude;
@@ -66,7 +62,6 @@ public class EnemyMovement : MonoBehaviour
         {
             index++;
             InitiateWait(index);
-            distanceTraveled = 0;
             if (index + 1 >= path.positionCount)
             {
                 index = path.positionCount - 1;
@@ -80,7 +75,6 @@ public class EnemyMovement : MonoBehaviour
         {
             index--;
             InitiateWait(index);
-            distanceTraveled = 0;
             if (index <= 0)
             {
                 index = 0;
@@ -90,9 +84,9 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void InitiateWait(int index)
+    private void InitiateWait(int waitIndex)
     {
-        float waitTime = GetVertex(index).z;
+        float waitTime = GetVertex(waitIndex).z;
         if (waitTime > 0)
         {
             timer = waitTime;
