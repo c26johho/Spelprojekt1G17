@@ -978,9 +978,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b4f296e431415545aa5bdf16dbad418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightCone
-  rayDistance: 8.14
-  angle: 0
-  numberOfRays: 0
+  rayDistance: 15.5
+  angle: 90
+  numberOfRays: 90
   enemyMovement: {fileID: 1802424470}
   destinationSetter: {fileID: 1802424463}
   objMask:
@@ -2555,7 +2555,7 @@ GameObject:
   - component: {fileID: 1041497536}
   - component: {fileID: 1041497537}
   - component: {fileID: 1041497538}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Triangle
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3030,7 +3030,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1423526047}
   - component: {fileID: 1423526048}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3509,7 +3509,6 @@ GameObject:
   - component: {fileID: 1802424469}
   - component: {fileID: 1802424463}
   - component: {fileID: 1802424470}
-  - component: {fileID: 1802424471}
   m_Layer: 12
   m_Name: Enemy1
   m_TagString: Untagged
@@ -3658,28 +3657,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   path: {fileID: 1718011632}
-  speed: 0
+  speed: 0.5
   faceDir: 0
---- !u!114 &1802424471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802424462}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b4f296e431415545aa5bdf16dbad418, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LightCone
-  rayDistance: 6.16
-  angle: 0
-  numberOfRays: 0
-  enemyMovement: {fileID: 0}
-  destinationSetter: {fileID: 0}
-  objMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &1836412778
 GameObject:
   m_ObjectHideFlags: 0

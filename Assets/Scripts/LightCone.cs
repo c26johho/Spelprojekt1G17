@@ -9,26 +9,25 @@ public class LightCone : MonoBehaviour
 {
     [Tooltip("The distance the light travels")]
     [SerializeField] private float rayDistance;
-
+    
     [Tooltip("The field of view angle")] 
-    [SerializeField, Range(2f, 180f)] private int angle;
+    [SerializeField, Range(2f, 360f)] private int angle;
+    
     [Tooltip("More rays = more performance but more accurate light")] 
     [SerializeField, Range(2, 200)] private int numberOfRays;
+    
     [Tooltip("Insert an object with a EnemyMovement component, used to move an object along a set route")]
     [SerializeField] private EnemyMovement enemyMovement;
+    
     [Tooltip("Insert an object with a AIDestinationSetter component, used for chasing other objects")]
     [SerializeField] private AIDestinationSetter destinationSetter;
-    private GameObject player;
-    private float facingDirection;
-    private bool hasLineOfSight = false;
-    private int layerId;
+    
+    [Tooltip("Specify which layers should be able to be seen by the light cone")]
     [SerializeField] private LayerMask objMask;
     
-
-    private void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
+    private float facingDirection;
+    private bool hasLineOfSight = false;
+    
 
     void Update()
     {
@@ -38,10 +37,10 @@ public class LightCone : MonoBehaviour
     void FixedUpdate()
     {
         
-        for (int i = -numberOfRays / 2; i <= numberOfRays / 2; i++)
+        for (int i = 0; i < numberOfRays; i++)
         {
-            float degree = (facingDirection + i) * Mathf.Deg2Rad;
-            Vector2 direction = new Vector2(Mathf.Cos(degree), Mathf.Sin(degree));
+            float rad = (facingDirection - angle / 2f + angle / (numberOfRays - 1f) * i) * Mathf.Deg2Rad;
+            Vector2 direction = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
             RaycastHit2D ray = Physics2D.Raycast(
                 transform.position,
                 direction,
