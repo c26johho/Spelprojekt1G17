@@ -40,11 +40,13 @@ public class EnemyMovement : MonoBehaviour
                 distanceTraveled += (velocity * Time.deltaTime).magnitude;
                 if (movingForwards)
                 {
-                    UpdateForwardsPatrol();
+                    float distanceRemaining = (GetVertex(index + 1) - transform.position).magnitude;
+                    UpdateForwardsPatrol(distanceRemaining);
                 }
                 else
                 {
-                    UpdateBackwardsPatrol();
+                    float distanceRemaining = (GetVertex(index - 1) - transform.position).magnitude;
+                    UpdateBackwardsPatrol(distanceRemaining);
                 }
             }
             else
@@ -58,9 +60,9 @@ public class EnemyMovement : MonoBehaviour
         animator.SetFloat("velocityY", velocity.y);*/
     }
     
-    private void UpdateForwardsPatrol()
+    private void UpdateForwardsPatrol(float distRem)
     {
-        if (distanceTraveled > (GetVertex(index + 1) - GetVertex(index)).magnitude)
+        if (distRem < 0.01f)
         {
             index++;
             InitiateWait(index);
@@ -70,12 +72,11 @@ public class EnemyMovement : MonoBehaviour
                 index = path.positionCount - 1;
                 movingForwards = false;
             }
-
         }
     }
-    private void UpdateBackwardsPatrol()
+    private void UpdateBackwardsPatrol(float distRem)
     {
-        if (distanceTraveled > (GetVertex(index -1) - GetVertex(index)).magnitude)
+        if (distRem < 0.01f)
         {
             index--;
             InitiateWait(index);
