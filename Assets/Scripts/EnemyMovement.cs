@@ -17,13 +17,7 @@ public class EnemyMovement : MonoBehaviour
     private bool right, left, up, down;
     private Animator animator;
     public FacingDirection faceDir;
-    public enum FacingDirection
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
+    
     private void Awake()
     {
         tf = GetComponent<Transform>();
@@ -156,3 +150,10 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 } 
+public enum FacingDirection
+{
+    Up,
+    Down,
+    Left,
+    Right
+}

@@ -1,20 +1,29 @@
 using System;
+using System.Collections.Generic;
+using Pathfinding;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class LightCone : MonoBehaviour
 {
+    [Tooltip("The distance the light travels")]
     [SerializeField] private float rayDistance;
+
+    [Tooltip("The field of view angle")] 
+    [SerializeField, Range(2f, 180f)] private int angle;
+    [Tooltip("More rays = more performance but more accurate light")] 
+    [SerializeField, Range(2, 200)] private int numberOfRays;
+    [Tooltip("Insert an object with a EnemyMovement component, used to move an object along a set route")]
+    [SerializeField] private EnemyMovement enemyMovement;
+    [Tooltip("Insert an object with a AIDestinationSetter component, used for chasing other objects")]
+    [SerializeField] private AIDestinationSetter destinationSetter;
     private GameObject player;
-    private EnemyMovement movement;
     private float facingDirection;
     private bool hasLineOfSight = false;
-
-    private void Awake()
-    {
-        movement = GetComponent<EnemyMovement>();
-    }
+    private int layerId;
+    [SerializeField] private LayerMask objMask;
+    
 
     private void Start()
     {
@@ -28,22 +37,27 @@ public class LightCone : MonoBehaviour
     
     void FixedUpdate()
     {
-        for (int i = -15; i <= 15; i++)
+        
+        for (int i = -numberOfRays / 2; i <= numberOfRays / 2; i++)
         {
-            float degree = (i + facingDirection) * Mathf.Deg2Rad;
-            Vector2 direction = new Vector2(Mathf.Cos(degree), Mathf.Sin(degree)) * rayDistance;
-            RaycastHit2D ray = Physics2D.Raycast(transform.position, direction);
+            float degree = (facingDirection + i) * Mathf.Deg2Rad;
+            Vector2 direction = new Vector2(Mathf.Cos(degree), Mathf.Sin(degree));
+            RaycastHit2D ray = Physics2D.Raycast(
+                transform.position,
+                direction,
+                rayDistance,
+                objMask);
             if (ray.collider != null)
             {
                 hasLineOfSight = ray.collider.CompareTag("Player");
                 
-                if (hasLineOfSight && (player.transform.position - transform.position).magnitude < rayDistance)
+                if (hasLineOfSight)
                 {
-                    Debug.DrawRay(transform.position, direction, Color.green);
+                    Debug.DrawRay(transform.position, ray.point - (Vector2)transform.position, Color.green);
                 }
                 else
                 {
-                    Debug.DrawRay(transform.position, direction, Color.red);
+                    Debug.DrawRay(transform.position, ray.point - (Vector2)transform.position, Color.red);
                 }
             }
         }
@@ -51,18 +65,18 @@ public class LightCone : MonoBehaviour
 
     private void UpdateFacingDir()
     {
-        switch (movement.faceDir)
+        switch (enemyMovement.faceDir)
         {
-            case EnemyMovement.FacingDirection.Right :
+            case FacingDirection.Right :
                 facingDirection = 0;
                 break;
-            case EnemyMovement.FacingDirection.Left :
+            case FacingDirection.Left :
                 facingDirection = 180;
                 break;
-            case EnemyMovement.FacingDirection.Up :
+            case FacingDirection.Up :
                 facingDirection = 90;
                 break;
-            case EnemyMovement.FacingDirection.Down :
+            case FacingDirection.Down :
                 facingDirection = 270;
                 break;
         }
