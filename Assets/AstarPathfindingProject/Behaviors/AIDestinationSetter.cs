@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VectorGraphics;
 using UnityEngine.Events;
 
 namespace Pathfinding {
@@ -22,7 +23,7 @@ namespace Pathfinding {
 		IAstarAI ai;
 
 		[Tooltip("Events that occur when object returns to original position after chase.")]
-		public UnityEvent OnReturn;
+		public UnityEvent onReturn;
 
 
 		private GameObject returnPoint;
@@ -52,7 +53,7 @@ namespace Pathfinding {
 					OnDisable();
 					isReturning = false;
 					Destroy(returnPoint);
-					OnReturn.Invoke();
+					onReturn.Invoke();
 				}
 			}
 		}
@@ -71,7 +72,8 @@ namespace Pathfinding {
 
 		private void CreateReturnPoint()
 		{
-			returnPoint = new GameObject("ReturnPoint");
+			if (returnPoint != null) return;
+			returnPoint = new GameObject("ReturnPoint_" + this.name);
 			returnPoint.transform.SetPositionAndRotation(
 				new Vector3(
 					Mathf.Floor(transform.position.x) + 0.5f,
