@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using Pathfinding;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
 public class LightCone : MonoBehaviour
 {
@@ -14,7 +10,7 @@ public class LightCone : MonoBehaviour
     [SerializeField, Range(2f, 360f)] private int angle;
     
     [Tooltip("More rays = more performance but more accurate light")] 
-    [SerializeField, Range(2, 200)] private int numberOfRays;
+    [SerializeField, Range(2,250)] private int numberOfRays;
     
     [Tooltip("Insert an object with a EnemyMovement component, used to move an object along a set route")]
     [SerializeField] private EnemyMovement enemyMovement;
@@ -24,14 +20,14 @@ public class LightCone : MonoBehaviour
     
     [Tooltip("Specify which layers should be able to be seen by the light cone")]
     [SerializeField] private LayerMask objMask;
-    
+
     private float facingDirection;
     private bool hasLineOfSight = false;
-    private Light2D lightCone;
-
+    private Light2D lightComp;
+    public Vector3[] hits { get; private set; }
     private void Awake()
     {
-        lightCone = GetComponent<Light2D>();
+        lightComp = GetComponent<Light2D>();
     }
 
     void Update()
@@ -41,7 +37,7 @@ public class LightCone : MonoBehaviour
     
     void FixedUpdate()
     {
-        Vector3[] hits = new Vector3[numberOfRays + 1];
+        hits = new Vector3[numberOfRays + 1];
         Vector3 origin = Vector3.zero;
         hits[0] = origin;
         for (int i = 0; i < numberOfRays; i++)
@@ -75,7 +71,7 @@ public class LightCone : MonoBehaviour
             }
         }
 
-        lightCone.SetShapePath(hits);
+        lightComp.SetShapePath(hits);
     }
 
     private void UpdateFacingDir()

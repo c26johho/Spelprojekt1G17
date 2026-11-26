@@ -10,13 +10,14 @@ public class EnemyMovement : MonoBehaviour
     [Tooltip("The speed which the object moves along the path. Speed recommendations 0-15")]
     [SerializeField] private float speed = 1;
     
+    public FacingDirection faceDir { get; private set; }
+    
     private int index;
     private Transform tf;
     private float timer;
     private bool waiting, moving, active, movingForwards;
     private bool right, left, up, down;
     private Animator animator;
-    public FacingDirection faceDir;
     
     /// <summary>
     /// On awake, set the objects transform to the first vertex of the path. Setting movingForwards, moving and active
