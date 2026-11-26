@@ -1,3 +1,4 @@
+using System;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -21,18 +22,22 @@ public class LightCone : MonoBehaviour
     [Tooltip("Specify which layers should be able to be seen by the light cone")]
     [SerializeField] private LayerMask objMask;
 
+    [Tooltip("Insert Spot Light 2D from child object")]
+    [SerializeField] private Light2D lightSource;
+
     private float facingDirection;
     private bool hasLineOfSight = false;
-    private Light2D lightComp;
     public Vector3[] hits { get; private set; }
     private void Awake()
     {
-        lightComp = GetComponent<Light2D>();
+        lightSource.pointLightOuterAngle = angle;
+        lightSource.pointLightInnerAngle = angle / 3f;
     }
 
     void Update()
     {
         UpdateFacingDir();
+        
     }
     
     void FixedUpdate()
@@ -70,8 +75,6 @@ public class LightCone : MonoBehaviour
                 hits[i + 1] = direction * rayDistance;
             }
         }
-
-        lightComp.SetShapePath(hits);
     }
 
     private void UpdateFacingDir()
@@ -90,6 +93,11 @@ public class LightCone : MonoBehaviour
             case FacingDirection.Down :
                 facingDirection = 270;
                 break;
+        }
+
+        if (!Mathf.Approximately(lightSource.transform.rotation.z, facingDirection - 90))
+        {
+            lightSource.transform.rotation = Quaternion.Euler(0,0,facingDirection - 90);
         }
     }
 }

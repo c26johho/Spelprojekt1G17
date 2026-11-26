@@ -67,13 +67,13 @@ public class EnemyMovement : MonoBehaviour
         float movementThisFrame = (velocity * Time.deltaTime).magnitude;
         if (movingForwards)
         {
-            transform.position = Vector3.MoveTowards(transform.position, GetVertex(index + 1), movementThisFrame);
+            transform.position = Vector2.MoveTowards(transform.position, GetVertex(index + 1), movementThisFrame);
             float distanceRemaining = (GetVertex(index + 1) - transform.position).magnitude;
             UpdateForwardsPatrol(distanceRemaining);
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, GetVertex(index - 1), movementThisFrame);
+            transform.position = Vector2.MoveTowards(transform.position, GetVertex(index - 1), movementThisFrame);
             float distanceRemaining = (GetVertex(index - 1) - transform.position).magnitude;
             UpdateBackwardsPatrol(distanceRemaining);
         }
