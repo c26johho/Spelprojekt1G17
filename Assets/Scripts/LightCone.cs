@@ -4,7 +4,7 @@ using Pathfinding;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.Rendering.Universal;
 public class LightCone : MonoBehaviour
 {
     [Tooltip("The distance the light travels")]
@@ -27,7 +27,12 @@ public class LightCone : MonoBehaviour
     
     private float facingDirection;
     private bool hasLineOfSight = false;
-    
+    private Light2D lightCone;
+
+    private void Awake()
+    {
+        lightCone = GetComponent<Light2D>();
+    }
 
     void Update()
     {
@@ -36,7 +41,9 @@ public class LightCone : MonoBehaviour
     
     void FixedUpdate()
     {
-        
+        Vector3[] hits = new Vector3[numberOfRays + 1];
+        Vector3 origin = Vector3.zero;
+        hits[0] = origin;
         for (int i = 0; i < numberOfRays; i++)
         {
             float rad = (facingDirection - angle / 2f + angle / (numberOfRays - 1f) * i) * Mathf.Deg2Rad;
@@ -56,10 +63,19 @@ public class LightCone : MonoBehaviour
                 }
                 else
                 {
-                    Debug.DrawRay(transform.position, ray.point - (Vector2)transform.position, Color.red);
+                    Debug.DrawRay(transform.position, ray.point - (Vector2)transform.position, Color.darkOrange);
                 }
+
+                hits[i + 1] = ray.point - (Vector2)transform.position;
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, direction * rayDistance, Color.red);
+                hits[i + 1] = direction * rayDistance;
             }
         }
+
+        lightCone.SetShapePath(hits);
     }
 
     private void UpdateFacingDir()
