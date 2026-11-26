@@ -58,21 +58,22 @@ public class EnemyMovement : MonoBehaviour
     }
     /// <summary>
     /// Uses the GetDir() method to get the direction the object is supposed to move along.
-    /// The function calculates how far it is to go to the next vertex and calls its respective function depending on if
-    /// the object is moving towards the end or the beginning of the path.
+    /// The function constantly moves the object towards the next vertex and calculates the remaining distance.
     /// </summary>
     private void Move()
     {
         Vector3 velocity = GetDir() * speed;
         GetFacingDirection(velocity);
-        transform.position += velocity * Time.deltaTime;
+        float movementThisFrame = (velocity * Time.deltaTime).magnitude;
         if (movingForwards)
         {
+            transform.position = Vector3.MoveTowards(transform.position, GetVertex(index + 1), movementThisFrame);
             float distanceRemaining = (GetVertex(index + 1) - transform.position).magnitude;
             UpdateForwardsPatrol(distanceRemaining);
         }
         else
         {
+            transform.position = Vector3.MoveTowards(transform.position, GetVertex(index - 1), movementThisFrame);
             float distanceRemaining = (GetVertex(index - 1) - transform.position).magnitude;
             UpdateBackwardsPatrol(distanceRemaining);
         }
