@@ -18,6 +18,7 @@ public class EnemyMovementHandler : MonoBehaviour
         aiLerp = GetComponent<AILerp>();
         aiDest = GetComponent<AIDestinationSetter>();
         aiLerp.enabled = false;
+        railM.path = railMovement.path;
     }
 
     private void Update()
@@ -87,6 +88,8 @@ public class EnemyMovementHandler : MonoBehaviour
     {
         [Tooltip("The speed which the object moves along the path. Speed recommendations 0-15")]
         [SerializeField, Min(0)] public float speed;
+        [Tooltip("The path that the object moves along. Has to be an object with the LineRenderer component")]
+        [SerializeField] public LineRenderer path;
     }
     
 }

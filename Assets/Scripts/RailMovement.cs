@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class RailMovement : MonoBehaviour
 {
-    [Tooltip("The path that the object moves along. Has to be an object with the LineRenderer component")]
-    [SerializeField] private LineRenderer path;
+    public LineRenderer path { get; set; }
     public float speed { get; set; }
     public FacingDirection faceDir { get; private set; }
     public bool active { get; set; }
@@ -29,7 +28,6 @@ public class RailMovement : MonoBehaviour
         movingForwards = true;
         moving = true;
         active = true;
-        Debug.Log(hasReturned + " " + active);
     }
     /// <summary>
     /// Every frame, check if active = true. If so, check if moving = true. If both are true, move the object according
