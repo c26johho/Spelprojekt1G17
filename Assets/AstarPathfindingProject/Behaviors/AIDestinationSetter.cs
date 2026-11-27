@@ -26,9 +26,10 @@ namespace Pathfinding {
 		//JohanEdit
 		[Tooltip("Events that occur when object returns to original position after chase.")]
 		public UnityEvent onReturn;
-		private GameObject returnPoint;
+
 		private AILerp aiLerp;
-		public bool isReturning { get; private set; }
+		public GameObject returnPoint { get; set; }
+		public bool isReturning { get; set; }
 		public float dirToDeg { get; private set; }
 
 
@@ -52,6 +53,7 @@ namespace Pathfinding {
 			//JohanEdit
 			if (isReturning)
 			{
+				
 				if ((transform.position - returnPoint.transform.position).magnitude < 0.01f)
 				{
 					OnDisable();
@@ -62,34 +64,6 @@ namespace Pathfinding {
 		}
 		
 		//JohanEdit everything below this point
-		public void SetTarget(Transform newTarget)
-		{
-			aiLerp.enabled = true;
-			isReturning = false;
-			CreateReturnPoint();
-			target = newTarget;
-		}
-		private void CreateReturnPoint()
-		{
-			if (returnPoint != null) return;
-			returnPoint = new GameObject("ReturnPoint_" + this.name);
-			returnPoint.transform.SetPositionAndRotation(
-				new Vector3(
-					Mathf.Floor(transform.position.x) + 0.5f,
-					Mathf.Floor(transform.position.y) + 0.5f), 
-				transform.rotation);
-		}
-		public void ReturnToPath()
-		{
-			isReturning = true;
-			target = returnPoint.transform;
-		}
-		public void Returned()
-		{
-			isReturning = false;
-			aiLerp.enabled = false;
-			Destroy(returnPoint);
-		}
 		private void GetFacingDirection()
 		{
 			Vector2 dir = ai.desiredVelocity / ai.maxSpeed;

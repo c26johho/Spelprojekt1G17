@@ -13,13 +13,10 @@ public class LightCone : MonoBehaviour
     [SerializeField, Range(2f, 360f)] private int angle;
     [Tooltip("More rays = more performance but more accurate light")] 
     [SerializeField, Range(2,250)] private int numberOfRays;
-    
-    [Header("Components")]
-    [Tooltip("Insert an object with a RailMovement component, used to move an object along a set route")]
-    [SerializeField] private RailMovement railMovement;
-    [Tooltip("Insert an object with a AIDestinationSetter component, used for chasing other objects")]
-    [SerializeField] private AIDestinationSetter destinationSetter;
-    [Tooltip("Insert Spot Light 2D from child object")]
+
+    [Header("Components")] 
+    [Tooltip("EnemyMovementHandler handles all movement related actions that the enemy needs")]
+    [SerializeField] private EnemyMovementHandler handler;
     [SerializeField] private Light2D lightSource;
 
     [Header("Layer Mask")]
@@ -38,7 +35,7 @@ public class LightCone : MonoBehaviour
         UpdateFacingDir();
         lightSource.pointLightOuterAngle = angle;
         lightSource.pointLightInnerAngle = angle / 3f;
-        isChasing = destinationSetter.target != null; 
+        isChasing = handler.aiDest.target != null; 
     }
     
     void FixedUpdate()
@@ -61,7 +58,7 @@ public class LightCone : MonoBehaviour
                 
                 if (canSeePlayer)
                 {
-                    destinationSetter.SetTarget(ray.transform);
+                    handler.SetTarget(ray.transform);
                     Debug.DrawRay(transform.position, ray.point - (Vector2)transform.position, Color.green);
                 }
                 else
@@ -83,11 +80,11 @@ public class LightCone : MonoBehaviour
     {
         if (isChasing)
         {
-            facingDirection = destinationSetter.dirToDeg;
+            facingDirection = handler.aiDest.dirToDeg;
         }
         else
         {
-            switch (railMovement.faceDir)
+            switch (handler.railM.faceDir)
             {
                 case FacingDirection.Right:
                     facingDirection = -90;

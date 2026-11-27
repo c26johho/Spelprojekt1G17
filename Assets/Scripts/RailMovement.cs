@@ -10,6 +10,7 @@ public class RailMovement : MonoBehaviour
     public float speed { get; set; }
     public FacingDirection faceDir { get; private set; }
     public bool active { get; set; }
+    public bool hasReturned { get; set; } = true;
     private int index;
     private Transform tf;
     private float timer;
@@ -28,6 +29,7 @@ public class RailMovement : MonoBehaviour
         movingForwards = true;
         moving = true;
         active = true;
+        Debug.Log(hasReturned + " " + active);
     }
     /// <summary>
     /// Every frame, check if active = true. If so, check if moving = true. If both are true, move the object according
@@ -39,7 +41,7 @@ public class RailMovement : MonoBehaviour
     {
         if (active)
         {
-            if (moving)
+            if (moving && hasReturned)
             {
                 Move();
             }

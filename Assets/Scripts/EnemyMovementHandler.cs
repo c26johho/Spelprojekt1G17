@@ -5,12 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(RailMovement),typeof(AILerp), typeof(AIDestinationSetter))]
 public class EnemyMovementHandler : MonoBehaviour
 {
-    private RailMovement railM;
-    private AILerp aiLerp;
-    private AIDestinationSetter aiDest;
+    public RailMovement railM { get; private set; }
+    public AILerp aiLerp { get; private set; }
+    public  AIDestinationSetter aiDest { get; private set; }
     
-    private GameObject returnPoint;
-    private bool isReturning;
 
     public Pathfinding pathfinding;
     public Rail railMovement;
@@ -19,6 +17,7 @@ public class EnemyMovementHandler : MonoBehaviour
         railM = GetComponent<RailMovement>();
         aiLerp = GetComponent<AILerp>();
         aiDest = GetComponent<AIDestinationSetter>();
+        aiLerp.enabled = false;
     }
 
     private void Update()
@@ -34,17 +33,17 @@ public class EnemyMovementHandler : MonoBehaviour
         else aiLerp.speed = pathfinding.chaseSpeed;
     }
 
-    /*public void SetTarget(Transform newTarget)
+    public void SetTarget(Transform newTarget)
     {
-        aiLerp.enabled = true;
+        ActivatePathfinding();
         CreateReturnPoint();
         aiDest.target = newTarget;
     }
     private void CreateReturnPoint()
     {
-        if (returnPoint != null) return;
-        returnPoint = new GameObject("ReturnPoint_" + this.name);
-        returnPoint.transform.SetPositionAndRotation(
+        if (aiDest.returnPoint != null) return;
+        aiDest.returnPoint = new GameObject("ReturnPoint_" + this.gameObject.name);
+        aiDest.returnPoint.transform.SetPositionAndRotation(
             new Vector3(
                 Mathf.Floor(transform.position.x) + 0.5f,
                 Mathf.Floor(transform.position.y) + 0.5f), 
@@ -52,30 +51,29 @@ public class EnemyMovementHandler : MonoBehaviour
     }
     public void ReturnToPath()
     {
-        isReturning = true;
-        aiDest.target = returnPoint.transform;
+        aiDest.isReturning = true;
+        SetTarget(aiDest.returnPoint.transform);
     }
     public void Returned()
     {
-        isReturning = false;
-        aiLerp.enabled = false;
-        Destroy(returnPoint);
-    }*/
-
-    public void ChangeMovementStyle()
-    {
-        if (aiLerp.enabled)
-        {
-            aiLerp.enabled = false;
-            railM.active = true;
-        }
-        else
-        {
-            aiLerp.enabled = true;
-            railM.active = false;
-        }
+        aiDest.isReturning = false;
+        ActivateRailMovement();
+        Destroy(aiDest.returnPoint);
     }
-    
+
+    private void ActivatePathfinding()
+    {
+        aiLerp.enabled = true;
+        railM.active = false;
+        railM.hasReturned = false;
+    }
+    private void ActivateRailMovement()
+    {
+        aiLerp.enabled = false;
+        railM.active = true;
+        railM.hasReturned = true;
+    }
+
     
     [Serializable]
     public class Pathfinding
