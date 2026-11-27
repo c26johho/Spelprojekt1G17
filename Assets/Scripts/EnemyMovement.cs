@@ -18,7 +18,6 @@ public class EnemyMovement : MonoBehaviour
     private bool waiting, moving, active, movingForwards;
     private bool right, left, up, down;
     private Animator animator;
-    
     /// <summary>
     /// On awake, set the objects transform to the first vertex of the path. Setting movingForwards, moving and active
     /// to true means that the object starts to move on the first frame and continues until told otherwise.
