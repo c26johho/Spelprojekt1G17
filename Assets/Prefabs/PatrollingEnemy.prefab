@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 0.03
   m_LightVolumeEnabled: 1
-  m_ApplyToSortingLayers: 00000000b5d93659
+  m_ApplyToSortingLayers: 00000000b5d9365915945ef53b3903ce
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -376,7 +376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6f2093aee5a7841b7d7d0e7f5cfea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  path: {fileID: 0}
 --- !u!114 &7224366922844286338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,3 +393,4 @@ MonoBehaviour:
     returnSpeed: 1.11
   railMovement:
     speed: 0.53
+    path: {fileID: 0}
