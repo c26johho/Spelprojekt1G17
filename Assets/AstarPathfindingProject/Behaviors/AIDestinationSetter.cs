@@ -22,12 +22,12 @@ namespace Pathfinding {
 		public Transform target;
 		IAstarAI ai;
 
+		//JohanEdit
 		[Tooltip("Events that occur when object returns to original position after chase.")]
 		public UnityEvent onReturn;
-
-
 		private GameObject returnPoint;
 		private bool isReturning;
+		public float dirToDeg { get; private set; }
 
 
 		void OnEnable () {
@@ -46,6 +46,7 @@ namespace Pathfinding {
 		/// <summary>Updates the AI's destination every frame</summary>
 		void Update () {
 			if (target != null && ai != null) ai.destination = target.position;
+			//JohanEdit
 			if (isReturning)
 			{
 				if ((transform.position - returnPoint.transform.position).magnitude < 0.01f)
@@ -56,8 +57,10 @@ namespace Pathfinding {
 					onReturn.Invoke();
 				}
 			}
+			GetFacingDirection();
 		}
-
+		
+		//JohanEdit everything below this point
 		public void SetTarget(Transform newTarget)
 		{
 			CreateReturnPoint();
@@ -80,6 +83,38 @@ namespace Pathfinding {
 					Mathf.Floor(transform.position.y) + 0.5f), 
 				transform.rotation);
 		}
-		
+
+		private void GetFacingDirection()
+		{
+			Vector2 dir = ai.desiredVelocity / ai.maxSpeed;
+			Vector2 roundedDir = new Vector2(
+				Mathf.Round(dir.x),
+				Mathf.Round(dir.y));
+			if (dir.magnitude > 1) return;
+			if (roundedDir.x != 0)
+			{
+				switch (roundedDir.x)
+				{
+					case 1 :
+						dirToDeg = -90;
+						break;
+					case -1 :
+						dirToDeg = 90;
+						break;
+				}
+			}
+			else
+			{
+				switch (roundedDir.y)
+				{
+					case 1 :
+						dirToDeg = 0;
+						break;
+					case -1 :
+						dirToDeg = 180;
+						break;
+				}
+			}
+		}
 	}
 }
