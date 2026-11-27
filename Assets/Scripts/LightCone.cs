@@ -2,6 +2,8 @@ using System;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
+
 public class LightCone : MonoBehaviour
 {
     [Header("Values")]
@@ -13,8 +15,8 @@ public class LightCone : MonoBehaviour
     [SerializeField, Range(2,250)] private int numberOfRays;
     
     [Header("Components")]
-    [Tooltip("Insert an object with a EnemyMovement component, used to move an object along a set route")]
-    [SerializeField] private EnemyMovement enemyMovement;
+    [Tooltip("Insert an object with a PathMovement component, used to move an object along a set route")]
+    [SerializeField] private PathMovement pathMovement;
     [Tooltip("Insert an object with a AIDestinationSetter component, used for chasing other objects")]
     [SerializeField] private AIDestinationSetter destinationSetter;
     [Tooltip("Insert Spot Light 2D from child object")]
@@ -85,7 +87,7 @@ public class LightCone : MonoBehaviour
         }
         else
         {
-            switch (enemyMovement.faceDir)
+            switch (pathMovement.faceDir)
             {
                 case FacingDirection.Right:
                     facingDirection = -90;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class PathMovement : MonoBehaviour
 {
     [Tooltip("The path that the object moves along. Has to be an object with the LineRenderer component")]
     [SerializeField] private LineRenderer path;
