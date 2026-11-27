@@ -28,7 +28,7 @@ namespace Pathfinding {
 		public UnityEvent onReturn;
 		private GameObject returnPoint;
 		private AILerp aiLerp;
-		private bool isReturning;
+		public bool isReturning { get; private set; }
 		public float dirToDeg { get; private set; }
 
 
@@ -65,6 +65,7 @@ namespace Pathfinding {
 		public void SetTarget(Transform newTarget)
 		{
 			aiLerp.enabled = true;
+			isReturning = false;
 			CreateReturnPoint();
 			target = newTarget;
 		}

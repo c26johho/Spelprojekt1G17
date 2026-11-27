@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class PathMovement : MonoBehaviour
+public class RailMovement : MonoBehaviour
 {
     [Tooltip("The path that the object moves along. Has to be an object with the LineRenderer component")]
     [SerializeField] private LineRenderer path;
-    [Tooltip("The speed which the object moves along the path. Speed recommendations 0-15")]
-    [SerializeField] private float speed = 1;
-    
+    public float speed { get; set; }
     public FacingDirection faceDir { get; private set; }
-    
+    public bool active { get; set; }
     private int index;
     private Transform tf;
     private float timer;
-    private bool waiting, moving, active, movingForwards;
+    private bool waiting, moving, movingForwards;
     private bool right, left, up, down;
     private Animator animator;
     /// <summary>
@@ -170,21 +168,7 @@ public class PathMovement : MonoBehaviour
         currentVertex.z = 0;
         return (nextVertex - currentVertex).normalized;
     }
-    /// <summary>
-    /// Sets active = false in order to stop any further motion and save all information for later continuance.
-    /// </summary>
-    public void PauseMovement()
-    {
-        active = false;
-    }
 
-    /// <summary>
-    /// Sets active = true to continue movement.
-    /// </summary>
-    public void ResumeMovement()
-    {
-        active = true;
-    }
     
     /// <summary>
     /// Saves the direction the object is moving towards as a variable that can be used in other applications.

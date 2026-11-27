@@ -15,8 +15,8 @@ public class LightCone : MonoBehaviour
     [SerializeField, Range(2,250)] private int numberOfRays;
     
     [Header("Components")]
-    [Tooltip("Insert an object with a PathMovement component, used to move an object along a set route")]
-    [SerializeField] private PathMovement pathMovement;
+    [Tooltip("Insert an object with a RailMovement component, used to move an object along a set route")]
+    [SerializeField] private RailMovement railMovement;
     [Tooltip("Insert an object with a AIDestinationSetter component, used for chasing other objects")]
     [SerializeField] private AIDestinationSetter destinationSetter;
     [Tooltip("Insert Spot Light 2D from child object")]
@@ -87,7 +87,7 @@ public class LightCone : MonoBehaviour
         }
         else
         {
-            switch (pathMovement.faceDir)
+            switch (railMovement.faceDir)
             {
                 case FacingDirection.Right:
                     facingDirection = -90;
