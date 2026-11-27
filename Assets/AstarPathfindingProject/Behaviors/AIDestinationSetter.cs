@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using Unity.VectorGraphics;
 using UnityEngine.Events;
 
@@ -26,12 +27,14 @@ namespace Pathfinding {
 		[Tooltip("Events that occur when object returns to original position after chase.")]
 		public UnityEvent onReturn;
 		private GameObject returnPoint;
+		private AILerp aiLerp;
 		private bool isReturning;
 		public float dirToDeg { get; private set; }
 
 
 		void OnEnable () {
 			ai = GetComponent<IAstarAI>();
+			aiLerp = GetComponent<AILerp>();
 			// Update the destination right before searching for a path as well.
 			// This is enough in theory, but this script will also update the destination every
 			// frame as the destination is used for debugging and may be used for other things by other
@@ -52,8 +55,6 @@ namespace Pathfinding {
 				if ((transform.position - returnPoint.transform.position).magnitude < 0.01f)
 				{
 					OnDisable();
-					isReturning = false;
-					Destroy(returnPoint);
 					onReturn.Invoke();
 				}
 			}
@@ -63,16 +64,10 @@ namespace Pathfinding {
 		//JohanEdit everything below this point
 		public void SetTarget(Transform newTarget)
 		{
+			aiLerp.enabled = true;
 			CreateReturnPoint();
 			target = newTarget;
 		}
-
-		public void ReturnToPath()
-		{
-			isReturning = true;
-			target = returnPoint.transform;
-		}
-
 		private void CreateReturnPoint()
 		{
 			if (returnPoint != null) return;
@@ -83,7 +78,17 @@ namespace Pathfinding {
 					Mathf.Floor(transform.position.y) + 0.5f), 
 				transform.rotation);
 		}
-
+		public void ReturnToPath()
+		{
+			isReturning = true;
+			target = returnPoint.transform;
+		}
+		public void Returned()
+		{
+			isReturning = false;
+			aiLerp.enabled = false;
+			Destroy(returnPoint);
+		}
 		private void GetFacingDirection()
 		{
 			Vector2 dir = ai.desiredVelocity / ai.maxSpeed;

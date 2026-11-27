@@ -36,7 +36,7 @@ public class LightCone : MonoBehaviour
         UpdateFacingDir();
         lightSource.pointLightOuterAngle = angle;
         lightSource.pointLightInnerAngle = angle / 3f;
-        isChasing = destinationSetter.target != null;
+        isChasing = destinationSetter.target != null; 
     }
     
     void FixedUpdate()
@@ -59,7 +59,7 @@ public class LightCone : MonoBehaviour
                 
                 if (canSeePlayer)
                 {
-                    //TODO: Aktivera chase
+                    destinationSetter.SetTarget(ray.transform);
                     Debug.DrawRay(transform.position, ray.point - (Vector2)transform.position, Color.green);
                 }
                 else
